@@ -1,0 +1,166 @@
+<div class="container mat-elevation-z8">
+
+<div class="table-loading-shade" *ngIf="isProcessing">
+  <mat-spinner *ngIf="isProcessing"></mat-spinner>
+</div>
+  
+<div class="table-container">
+  <table mat-table multiTemplateDataRows [dataSource]="students" matSort matSortActive="lastName" matSortDirection="asc">
+
+	<!-- The student main row columns. -->
+	<ng-container matColumnDef="select">
+	  <th mat-header-cell *matHeaderCellDef>
+		<mat-checkbox (change)="$event ? masterToggle() : null"
+					  [checked]="selection.hasValue() && isAllSelected()"
+					  [indeterminate]="selection.hasValue() && !isAllSelected()">
+		</mat-checkbox>
+	  </th>
+	  <td mat-cell *matCellDef="let row">
+		<mat-checkbox (click)="$event.stopPropagation()"
+					  (change)="$event ? selection.toggle(row) : null"
+					  [checked]="selection.isSelected(row)">
+		</mat-checkbox>
+	  </td>
+	</ng-container>
+
+	<ng-container matColumnDef="expandRow">
+	  <th mat-header-cell *matHeaderCellDef></th>
+	  <td mat-cell *matCellDef="let student">
+		<button *ngIf="!isStudentExpanded(student.studentId)" mat-icon-button (click)="expandStudent(student.studentId)"><mat-icon>arrow_right</mat-icon></button>
+		<button *ngIf="isStudentExpanded(student.studentId)" mat-icon-button (click)="collapseStudent(student.studentId)"><mat-icon>arrow_drop_down</mat-icon></button>
+	  </td>
+	</ng-container>
+
+	<ng-container matColumnDef="studentSchoolId">
+	  <th mat-header-cell *matHeaderCellDef><table><tr><td mat-sort-header>Student Id</td><td #tdStudentId><button mat-icon-button matTooltip="Filter by Student Id" (click)="openTextFilterDialog(tdStudentId, 'studentSchoolId')"><mat-icon [ngClass]="getColumnFilterClass('studentSchoolId')">filter_list</mat-icon></button></td></tr></table></th>
+	  <td mat-cell *matCellDef="let student">
+		<span *ngIf="!isEditingStudent(student.studentId)">{{student.studentSchoolId}}</span>
+		<span *ngIf="isEditingStudent(student.studentId)">
+		  <mat-form-field appearance="outline" style="width: 140px;">
+			<input matInput [formControl]="studentSchoolIdFormControl">
+			<mat-error *ngIf="studentSchoolIdFormControl.invalid">{{getErrorMessage(studentSchoolIdFormControl)}}</mat-error>
+		  </mat-form-field>
+		</span>
+	  </td>
+	</ng-container>
+
+	<ng-container matColumnDef="firstName">
+	  <th mat-header-cell *matHeaderCellDef><table><tr><td mat-sort-header>First Name</td><td #tdFirstName><button mat-icon-button matTooltip="Filter by First Name" (click)="openTextFilterDialog(tdFirstName, 'firstName')"><mat-icon [ngClass]="getColumnFilterClass('firstName')">filter_list</mat-icon></button></td></tr></table></th>
+	  <td mat-cell *matCellDef="let student">
+		<span *ngIf="!isEditingStudent(student.studentId)">{{student.firstName}}</span>
+		<span *ngIf="isEditingStudent(student.studentId)">
+		  <mat-form-field appearance="outline" style="width: 100%;">
+			<input matInput [formControl]="firstNameFormControl">
+			<mat-error *ngIf="firstNameFormControl.invalid">{{getErrorMessage(firstNameFormControl)}}</mat-error>
+		  </mat-form-field>
+		</span>
+	  </td>
+	</ng-container>
+
+	<ng-container matColumnDef="lastName">
+	  <th mat-header-cell *matHeaderCellDef><table><tr><td mat-sort-header>Last Name</td><td #tdLastName><button mat-icon-button matTooltip="Filter by Last Name" (click)="openTextFilterDialog(tdLastName, 'lastName')"><mat-icon [ngClass]="getColumnFilterClass('lastName')">filter_list</mat-icon></button></td></tr></table></th>
+	  <td mat-cell *matCellDef="let student">
+		<span *ngIf="!isEditingStudent(student.studentId)">{{student.lastName}}</span>
+		<span *ngIf="isEditingStudent(student.studentId)">
+		  <mat-form-field appearance="outline" style="width: 100%;">
+			<input matInput [formControl]="lastNameFormControl">
+			<mat-error *ngIf="lastNameFormControl.invalid">{{getErrorMessage(lastNameFormControl)}}</mat-error>
+		  </mat-form-field>
+		</span>
+	  </td>
+	</ng-container>
+
+	<ng-container matColumnDef="studentEmail">
+	  <th mat-header-cell *matHeaderCellDef><table><tr><td mat-sort-header>Student Email</td><td #tdStudentEmail><button mat-icon-button matTooltip="Filter by Student Email" (click)="openTextFilterDialog(tdStudentEmail, 'studentEmail')"><mat-icon [ngClass]="getColumnFilterClass('studentEmail')">filter_list</mat-icon></button></td></tr></table></th>
+	  <td mat-cell *matCellDef="let student">
+		<span *ngIf="!isEditingStudent(student.studentId)">{{student.studentEmail}}</span>
+		<span *ngIf="isEditingStudent(student.studentId)">
+		  <mat-form-field appearance="outline" style="width: 100%;">
+			<input matInput [formControl]="studentEmailFormControl">
+			<mat-error *ngIf="studentEmailFormControl.invalid">{{getErrorMessage(studentEmailFormControl)}}</mat-error>
+		  </mat-form-field>
+		</span>
+	  </td>
+	</ng-container>
+
+	<ng-container matColumnDef="editDelete">
+	  <th mat-header-cell *matHeaderCellDef>
+	    <button mat-icon-button matTooltip="Add student" (click)="onAddStudentClick()"><mat-icon>add_box</mat-icon></button>
+	    <button mat-icon-button matTooltip="Delete selected" (click)="onDeleteSelectedClick()"><mat-icon>delete_sweep</mat-icon></button>
+	  </th>
+	  <td mat-cell *matCellDef="let student">
+		<span *ngIf="!isEditingStudent(student.studentId)">
+		  <button mat-icon-button matTooltip="Edit student" (click)="onEditClick(student.studentId)"><mat-icon>edit</mat-icon></button>
+		  <button mat-icon-button matTooltip="Delete student" (click)="onDeleteClick(student.studentId)"><mat-icon>delete</mat-icon></button>
+		</span>
+		<span *ngIf="isEditingStudent(student.studentId)">
+		  <button mat-icon-button matTooltip="Save" (click)="onUpdateClick()" [disabled]="isUpdateDisabled()"><mat-icon>done</mat-icon></button>
+		  <button mat-icon-button matTooltip="Cancel" (click)="onCancelEditClick()"><mat-icon>close</mat-icon></button>
+		</span>
+      </td>
+	</ng-container>
+	
+	<!-- The student detail row columns. It's a single column that spans across all the main row columns. -->
+	<ng-container matColumnDef="studentDetail">
+	  <td mat-cell *matCellDef="let student" [attr.colspan]="columnsToDisplay.length"><app-student-detail [studentId]="student.studentId" [isExpanded]="isStudentExpanded(student.studentId)"></app-student-detail></td>
+	</ng-container>
+
+    <!-- The cells for the add header row -->
+    <ng-container matColumnDef="add-hdr-first">
+      <td mat-cell *matHeaderCellDef [attr.colspan]="2"></td>
+    </ng-container>
+    <ng-container matColumnDef="add-hdr-studentId">
+      <td mat-cell *matHeaderCellDef>
+	    <mat-form-field appearance="outline" style="width: 140px;">
+		  <input matInput [formControl]="studentSchoolIdFormControl">
+		  <mat-error *ngIf="studentSchoolIdFormControl.invalid">{{getErrorMessage(studentSchoolIdFormControl)}}</mat-error>
+		</mat-form-field>
+	  </td>
+    </ng-container>
+    <ng-container matColumnDef="add-hdr-firstName">
+      <td mat-cell *matHeaderCellDef>
+		<mat-form-field appearance="outline" style="width: 100%;">
+		  <input matInput [formControl]="firstNameFormControl">
+		  <mat-error *ngIf="firstNameFormControl.invalid">{{getErrorMessage(firstNameFormControl)}}</mat-error>
+		</mat-form-field>
+	  </td>
+    </ng-container>
+    <ng-container matColumnDef="add-hdr-lastName">
+      <td mat-cell *matHeaderCellDef>
+		<mat-form-field appearance="outline" style="width: 100%;">
+		  <input matInput [formControl]="lastNameFormControl">
+		  <mat-error *ngIf="lastNameFormControl.invalid">{{getErrorMessage(lastNameFormControl)}}</mat-error>
+		</mat-form-field>	  
+	  </td>
+    </ng-container>
+    <ng-container matColumnDef="add-hdr-studentEmail">
+      <td mat-cell *matHeaderCellDef>
+		<mat-form-field appearance="outline" style="width: 100%;">
+		  <input matInput [formControl]="studentEmailFormControl">
+		  <mat-error *ngIf="studentEmailFormControl.invalid">{{getErrorMessage(studentEmailFormControl)}}</mat-error>
+		</mat-form-field>	  
+	  </td>
+    </ng-container>
+    <ng-container matColumnDef="add-hdr-last">
+      <td mat-cell *matHeaderCellDef>
+	    <button mat-stroked-button style="width: 100px;" (click)="onAddClick()" [disabled]="isAddDisabled()">Add</button>&nbsp;&nbsp;<button mat-stroked-button style="width: 100px;" (click)="onCancelAddClick()">Cancel</button>
+	  </td>
+    </ng-container>
+
+	<!-- The header row. It's sticky so it won't move during scrolling. -->
+	<tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+	
+    <!-- The add header row. -->
+    <tr mat-header-row [ngClass]="getAddHeaderRowClass()" *matHeaderRowDef="['add-hdr-first', 'add-hdr-studentId', 'add-hdr-firstName', 'add-hdr-lastName', 'add-hdr-studentEmail', 'add-hdr-last']; sticky: true"></tr>
+	
+	<!-- The main student row. -->
+	<tr mat-row *matRowDef="let student; columns: columnsToDisplay;"></tr>
+	
+	<!-- The detail student row. -->
+	<tr mat-row *matRowDef="let student; columns: ['studentDetail'];" [ngClass]="getStudentDetailClass(student.studentId)"></tr>
+
+  </table>
+</div>
+
+<mat-paginator [length]="totalStudents" [pageSize]="defaultPageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="showFirstLastButtons"></mat-paginator>
+</div>

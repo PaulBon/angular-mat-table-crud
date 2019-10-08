@@ -1,0 +1,62 @@
+.container {
+  position: relative;
+  min-height: 200px;
+}
+
+.table-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1000; /* need large z-index so spinner won't be hidden by table header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Add border and padding to each cell. NOTE: the border color matches the hover color below. */
+.mat-cell, .mat-header-cell {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.mat-header-cell {
+  background-color: rgb(170,170,170);
+  color: white;
+}
+
+/* Make table zebra stripped. */
+tr:nth-child(even) {
+  background-color: #f2f2f2
+}
+
+/* Highlight rows on hover. */
+.mat-row:hover {
+  background-color: #ddd;
+}
+
+/* Center the checkbox in the Applied column */
+.mat-column-applied.mat-cell {
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-termCreatedDate {
+  width: 160px;
+}
+.mat-column-termDescription {
+  width: 160px;
+}
+.mat-column-loansTotalAmount {
+  width: 140px;
+}
+.mat-column-applied {
+  width: 60px;
+}

@@ -1,0 +1,98 @@
+.container {
+  position: relative;
+  min-height: 200px;
+}
+
+.table-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container {
+  height: 80vh;			/* Have table take up 80% of the browser's viewport height. */
+  overflow-y: scroll;	/* Always display y-axis scrollbar so table size doesn't change when the need for the scrollbar changes. */
+}
+
+/* The following CSS will left align the paginator. I prefer it right aligned so I've commented it out */
+/*
+.mat-paginator {
+	display: flex;
+	justify-content: left;
+}
+*/
+
+/* Add border and padding to each cell. NOTE: the border color matches the hover color below. */
+.mat-cell, .mat-header-cell {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.detail-row-collapsed {
+  visibility: collapse;
+}
+
+.detail-row-expanded {
+  visibility: visible;
+}
+
+.not-adding {
+  visibility: collapse;
+}
+
+.adding {
+  visibility: visible;
+}
+
+.column-filtered {
+  background-color: DimGray;
+}
+
+.column-not-filtered {
+  background-color: rgb(170,170,170);
+}
+
+.mat-header-cell {
+  background-color: rgb(170,170,170);
+  color: white;
+}
+
+.mat-column-select {
+  overflow: initial;
+}
+
+/* Make table zebra stripped. Due to detail rows, need to start with 3rd row and stripe every 4th row. */
+tr:nth-child(4n+3) {
+  background-color: #f2f2f2
+}
+
+/* Highlight rows on hover. */
+.mat-row:hover {
+  background-color: #ddd;
+}
+
+/* Column Widths */
+.mat-column-select {
+  width: 40px;
+}
+.mat-column-expandRow {
+  width: 40px;
+}
+.mat-column-studentSchoolId {
+  width: 140px;
+}
+.mat-column-editDelete {
+  width: 80px;
+}

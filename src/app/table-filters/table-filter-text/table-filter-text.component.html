@@ -1,0 +1,19 @@
+<div mat-dialog-content>
+  <p>Show items with value that:</p>
+  <mat-form-field appearance="outline">
+	  <mat-select [(ngModel)]="data.operator">
+		<mat-option *ngFor="let op of operators" [value]="op">
+		  {{op}}
+		</mat-option>
+	  </mat-select>
+  </mat-form-field>
+  <br />
+  <mat-form-field appearance="outline">
+    <input matInput [(ngModel)]="data.value">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button [mat-dialog-close]="data">Filter</button>
+  &nbsp;&nbsp;
+  <button mat-stroked-button (click)="onClearClick()">Clear</button>
+</div>
