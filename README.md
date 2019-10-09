@@ -2,9 +2,21 @@
 
 The main purpose of this project is to provide an example of an Angular Material table with the following features:
 
-- server-side paging, filtering and sorting
+- add, update and delete records
+- inline editing
+- checkbox selection
 - per column filtering
-- master-detail row
+- server-side paging, filtering and sorting
+- parent-child records display
+- multiple table headers
+- sticky table headers
+
+This project also provides examples for:
+
+- an autocomplete control with server-side processing
+- lazy loading of modules
+
+## Table of Contents
 
 * [License](#license)
 * [Demo](#demo)
