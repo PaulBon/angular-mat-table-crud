@@ -521,7 +521,7 @@ export class StudentsListComponent implements AfterViewInit {
                     switchMap(rsp => { // switches the Response observable to a ValidationErrors observable
                         this.isProcessing = false;
                         if (rsp.success) {
-                            return null;
+                            return of(null);
                         } else {
                             return of({ invalidSchoolId: { errorMsg: rsp.error } });
                         }
