@@ -464,10 +464,8 @@ export class StudentsListComponent implements AfterViewInit {
 
     /**
      * Called when the add student icon is clicked for a student. Adds the student and refreshes the table.
-     *
-     * @param studentId the studentId
      */
-    onAddClick(studentId: number): void {
+    onAddClick(): void {
         // Add the student
         const student: Student = {
             studentId: -1,
