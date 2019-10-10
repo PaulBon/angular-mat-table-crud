@@ -143,8 +143,9 @@
     </ng-container>
     <ng-container matColumnDef="add-hdr-last">
       <td mat-cell *matHeaderCellDef>
-	    <button mat-stroked-button style="width: 100px;" (click)="onAddClick()" [disabled]="isAddDisabled()">Add</button>&nbsp;&nbsp;<button mat-stroked-button style="width: 100px;" (click)="onCancelAddClick()">Cancel</button>
-	  </td>
+        <button mat-icon-button matTooltip="Save" (click)="onAddClick()" [disabled]="isAddDisabled()"><mat-icon>done</mat-icon></button>
+        <button mat-icon-button matTooltip="Cancel" (click)="onCancelAddClick()"><mat-icon>close</mat-icon></button>
+    </td>
     </ng-container>
 
 	<!-- The header row. It's sticky so it won't move during scrolling. -->
