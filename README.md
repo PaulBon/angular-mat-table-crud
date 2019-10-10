@@ -28,7 +28,7 @@ This software is provided free of charge and without restriction under the [MIT 
 
 ## Demo
 
-To Be Completed
+A demo of the project can be run on [StackBlitz](https://stackblitz.com/github/PaulBon/angular-mat-table-crud). Please be patient as StackBlitz imports the project and loads the dev server.
 
 ## Getting Started
 
