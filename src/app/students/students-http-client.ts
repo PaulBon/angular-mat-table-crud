@@ -141,6 +141,8 @@ export class StudentsHttpClient {
 
     /**
      * Updates the passed in student and returns the result of the update.
+     *
+     * @param student the student to update
      */
     updateStudent(student: Student): Observable<Response> {
 
@@ -168,6 +170,8 @@ export class StudentsHttpClient {
 
     /**
      * Adds the passed in student and returns the result of the add.
+     *
+     * @param student the student to add
      */
     addStudent(student: Student): Observable<Response> {
 
@@ -194,6 +198,8 @@ export class StudentsHttpClient {
 
     /**
      * Deletes the passed in student and returns the result of the delete.
+     *
+     * @param studentId the studentId of the student to delete
      */
     deleteStudent(studentId: number): Observable<Response> {
 
@@ -221,6 +227,8 @@ export class StudentsHttpClient {
 
     /**
      * Deletes the passed in students and returns the result of the delete.
+     *
+     * @param studentIds the studentIds of the students to delete
      */
     deleteStudents(studentIds: number[]): Observable<Response> {
 
@@ -271,6 +279,9 @@ export class StudentsHttpClient {
 
     /**
      * Returns a function that can be passed to the sort() function to sort values based on the passed in sortColumn and sortDirection.
+     *
+     * @param sortColumn the column to sort on
+     * @param sortDirection the sort direction
      */
     compareValues(sortColumn: string, sortDirection: string) {
         return (a: Student, b: Student) => {
@@ -287,6 +298,8 @@ export class StudentsHttpClient {
 
     /**
      * Returns a function that can be passed to the filter() function to filter students based on the passed in filters.
+     *
+     * @param tableFilters the filters to apply to the students
      */
     filterStudents(tableFilters: Map<string, TableFilter>) {
         return (student: Student) => {

@@ -185,7 +185,7 @@ export class StudentsListComponent implements AfterViewInit {
     }
 
     /**
-     * Called when the filter icon is clicked for a column. Opens the filter dialong for the column.
+     * Called when the filter icon is clicked for a column. Opens the filter dialog for the column.
      *
      * @param parentElement the td element for the column
      * @param column the column
