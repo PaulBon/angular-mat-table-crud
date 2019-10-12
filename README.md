@@ -1,6 +1,6 @@
 # Angular Material CRUD Table
 
-The main purpose of this project is to provide an example of an Angular Material table with the following features:
+The main purpose of this project is to provide an example of an [Angular Material](https://material.angular.io/) table with the following features:
 
 - add, update and delete records
 - inline editing
