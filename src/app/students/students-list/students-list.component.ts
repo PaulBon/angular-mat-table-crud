@@ -225,6 +225,8 @@ export class StudentsListComponent implements AfterViewInit {
             }
 
             // Reload the students passing in a post load function that collapses all detail rows
+            // NOTE: set the pageIndex to 0 since the user might be on a page that will no longer exist after the filter is applied.
+            this.paginator.pageIndex = 0;
             const postLoadFunction = (): void => { this.expandedStudents.clear(); };
             this.reloadStudents(postLoadFunction);
         });
@@ -319,6 +321,9 @@ export class StudentsListComponent implements AfterViewInit {
                             // Reload the students passing in a post load function that sets editStudentId = -1
                             // so if a row is in edit mode then it will exit it and also have it clear all selected
                             // students since they've been deleted.
+                            // NOTE: set the pageIndex to 0 since the user might be on a page that will no longer
+                            //       exist after the students are deleted.
+                            this.paginator.pageIndex = 0;
                             const postLoadFunction = (): void => { this.editStudentId = -1; this.selection.clear(); };
                             this.reloadStudents(postLoadFunction);
                         } else {
